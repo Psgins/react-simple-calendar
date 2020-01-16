@@ -6,7 +6,11 @@ import { getMonth } from 'date-fns';
 import { DateDescription } from '../types/DateDescription';
 
 const useStyles = makeStyles(theme => ({
-  root: {},
+  root: {
+    [theme.breakpoints.up(600)]: {
+      maxWidth: 600,
+    },
+  },
   footer: {
     display: 'block',
     [theme.breakpoints.up(600)]: {

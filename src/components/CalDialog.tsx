@@ -23,7 +23,7 @@ const CalDialog: FC<CalDialogProps> = ({ open, date, description, onSave, onCanc
 
   return (
     <Dialog fullWidth open={open} maxWidth="sm">
-      <DialogTitle>{format(date, 'dd MMMM yyyy')}</DialogTitle>
+      <DialogTitle>{format(date, 'd MMMM yyyy')}</DialogTitle>
       <DialogContent>
         <TextField
           fullWidth

@@ -2,7 +2,7 @@ import React, { FC, useMemo } from 'react';
 import { addDays, getDay, getDaysInMonth } from 'date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import { DateDescription } from '../types/DateDescription';
-import CalDay from './CalDay';
+import CalDayContainer from './CalDayContainer';
 
 interface CalDaysContainerProps {
   currentMonth: number;
@@ -60,9 +60,9 @@ const CalDaysContainer: FC<CalDaysContainerProps> = ({ currentMonth, description
 
   return (
     <div className={classes.root}>
-      {days.map(({ outer, date }, index) => (
-        <CalDay
-          key={index}
+      {days.map(({ outer, date }) => (
+        <CalDayContainer
+          key={date.getTime()}
           value={date}
           description={descriptions[date.getTime()]}
           outer={outer}
