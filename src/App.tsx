@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
+import CalContianer from './components/CalContainer';
 
-const App: React.FC = () => {
-  return <div className="App">Test</div>;
+const App: FC = () => {
+  return (
+    <div className="App">
+      <CalContianer />
+    </div>
+  );
 };
 
 export default App;
