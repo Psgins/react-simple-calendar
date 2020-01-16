@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles } from '@material-ui/core/styles';
 import CalHeaderArrow from './CalHeaderArrow';
+import CalWeekContainer from './CalWeekContainer';
 
 interface CalHeaderContianerProps {
   currentMonth: number;
@@ -28,13 +29,16 @@ const CalHeaderContianer: FC<CalHeaderContianerProps> = ({ currentMonth, onMonth
     onMonthChange(1);
   };
   return (
-    <AppBar position="static">
-      <Toolbar disableGutters>
-        <CalHeaderArrow disabled={currentMonth <= 0} onClick={handleArrowLeftClick} />
-        <div className={classes.month}>{format(startDateOfMonth, 'MMMM yyyy')}</div>
-        <CalHeaderArrow right disabled={currentMonth >= 11} onClick={handleArrowRightClick} />
-      </Toolbar>
-    </AppBar>
+    <>
+      <AppBar position="static">
+        <Toolbar disableGutters>
+          <CalHeaderArrow disabled={currentMonth <= 0} onClick={handleArrowLeftClick} />
+          <div className={classes.month}>{format(startDateOfMonth, 'MMMM yyyy')}</div>
+          <CalHeaderArrow right disabled={currentMonth >= 11} onClick={handleArrowRightClick} />
+        </Toolbar>
+      </AppBar>
+      <CalWeekContainer />
+    </>
   );
 };
 

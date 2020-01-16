@@ -9,6 +9,9 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'inline-block',
     lineHeight: '50px',
+    [theme.breakpoints.up(600)]: {
+      display: 'none',
+    },
   },
 }));
 

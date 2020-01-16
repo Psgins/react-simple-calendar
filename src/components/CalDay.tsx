@@ -21,11 +21,16 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       backgroundColor: 'rgba(0,0,0,0.08)',
     },
+    [theme.breakpoints.up(600)]: {
+      width: 'calc(100% / 7)',
+      textAlign: 'center',
+    },
   },
   outer: {
     display: 'none',
     [theme.breakpoints.up(600)]: {
       display: 'flex',
+      color: '#ccc',
     },
   },
   displayDay: {
@@ -34,6 +39,9 @@ const useStyles = makeStyles(theme => ({
     width: 50,
     height: 50,
     textAlign: 'center',
+    [theme.breakpoints.up(600)]: {
+      width: '100%',
+    },
   },
 }));
 

@@ -14,8 +14,15 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
+    [theme.breakpoints.up(600)]: {
+      flexFlow: 'row wrap',
+    },
   },
 }));
+
+function shiftWeekday(weekday: number) {
+  return weekday === 0 ? 6 : weekday - 1;
+}
 
 const CalDaysContainer: FC<CalDaysContainerProps> = ({ currentMonth, descriptions, onDescriptionChange }) => {
   const classes = useStyles();
@@ -25,7 +32,7 @@ const CalDaysContainer: FC<CalDaysContainerProps> = ({ currentMonth, description
     // 0 is sunday, 6 is saturday
     let weekday = getDay(startDate);
     // shift to start at monday
-    weekday = weekday === 0 ? 6 : weekday - 1;
+    weekday = shiftWeekday(weekday);
     const dayInLastMonth = [...Array(weekday)]
       .map((value, index) => -index - 1)
       .reverse()
@@ -38,7 +45,13 @@ const CalDaysContainer: FC<CalDaysContainerProps> = ({ currentMonth, description
       outer: false,
       date: new Date(2020, currentMonth, index + 1),
     }));
-    return [...dayInLastMonth, ...daysInThisMonth];
+    const lastDate = new Date(2020, currentMonth, daysInMonth);
+    let lastWeekday = shiftWeekday(getDay(lastDate));
+    const daysInNextMonth = [...Array(6 - lastWeekday)].map((value, index) => ({
+      outer: true,
+      date: addDays(lastDate, index + 1),
+    }));
+    return [...dayInLastMonth, ...daysInThisMonth, ...daysInNextMonth];
   }, [currentMonth]);
 
   const handleDescriptionChange = (descriptionDate: Date) => (description: string) => {
