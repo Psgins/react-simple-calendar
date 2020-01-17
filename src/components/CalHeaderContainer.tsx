@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { format } from 'date-fns';
+import { format, getYear, addMonths } from 'date-fns';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,6 +7,7 @@ import CalHeaderArrow from './CalHeaderArrow';
 import CalWeekContainer from './CalWeekContainer';
 
 interface CalHeaderContianerProps {
+  currentYear: number;
   currentMonth: number;
   onMonthChange: (nextMonth: number) => void;
 }
@@ -19,9 +20,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const CalHeaderContianer: FC<CalHeaderContianerProps> = ({ currentMonth, onMonthChange }) => {
+const CalHeaderContianer: FC<CalHeaderContianerProps> = ({ currentYear, currentMonth, onMonthChange }) => {
   const classes = useStyles();
-  const startDateOfMonth = new Date(2020, currentMonth, 1);
+  const startDateOfMonth = new Date(currentYear, currentMonth, 1);
+  const getDisabledArrow = (nextMonth: Date) => {
+    return getYear(nextMonth) !== currentYear;
+  };
   const handleArrowLeftClick = () => {
     onMonthChange(-1);
   };
@@ -32,9 +36,13 @@ const CalHeaderContianer: FC<CalHeaderContianerProps> = ({ currentMonth, onMonth
     <>
       <AppBar position="static">
         <Toolbar disableGutters>
-          <CalHeaderArrow disabled={currentMonth <= 0} onClick={handleArrowLeftClick} />
+          <CalHeaderArrow disabled={getDisabledArrow(addMonths(startDateOfMonth, -1))} onClick={handleArrowLeftClick} />
           <div className={classes.month}>{format(startDateOfMonth, 'MMMM yyyy')}</div>
-          <CalHeaderArrow right disabled={currentMonth >= 11} onClick={handleArrowRightClick} />
+          <CalHeaderArrow
+            right
+            disabled={getDisabledArrow(addMonths(startDateOfMonth, 1))}
+            onClick={handleArrowRightClick}
+          />
         </Toolbar>
       </AppBar>
       <CalWeekContainer />

@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import CalHeaderContainer from './CalHeaderContainer';
 import CalDaysContainer from './CalDaysContainer';
 import { makeStyles } from '@material-ui/core/styles';
-import { getMonth } from 'date-fns';
+import { getMonth, getYear } from 'date-fns';
 import { DateDescription } from '../types/DateDescription';
 
 const useStyles = makeStyles(theme => ({
@@ -22,6 +22,7 @@ const useStyles = makeStyles(theme => ({
 const CalContianer: FC = () => {
   const classes = useStyles();
   const today = new Date();
+  const currentYear = getYear(today);
   const [currentMonth, setCurrentMonth] = useState(getMonth(today));
   const [descriptions, setDescriptions] = useState<Record<number, string>>({});
 
@@ -41,14 +42,14 @@ const CalContianer: FC = () => {
 
   return (
     <div className={classes.root}>
-      <CalHeaderContainer currentMonth={currentMonth} onMonthChange={handleMonthChange} />
+      <CalHeaderContainer currentYear={currentYear} currentMonth={currentMonth} onMonthChange={handleMonthChange} />
       <CalDaysContainer
         currentMonth={currentMonth}
         descriptions={descriptions}
         onDescriptionChange={handleDescriptionChange}
       />
       <div className={classes.footer}>
-        <CalHeaderContainer currentMonth={currentMonth} onMonthChange={handleMonthChange} />
+        <CalHeaderContainer currentYear={currentYear} currentMonth={currentMonth} onMonthChange={handleMonthChange} />
       </div>
     </div>
   );
